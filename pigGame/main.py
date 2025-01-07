@@ -24,7 +24,7 @@ class game:
     def startGame(self):
         self.players_score = [0 for i in range(self.players)]
         # print(self.players_score)
-        max_score=50
+        max_score=100
 
         while max(self.players_score)<max_score:
             for i in range(self.players):
