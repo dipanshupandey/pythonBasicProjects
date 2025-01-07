@@ -1,0 +1,6 @@
+"# Pig Dice Game" 
+"A simple implementation of the classic Pig dice game in Python." 
+"## Features" 
+"- Turn-based gameplay for upto 4 players" 
+"- Option to roll or hold during each turn" 
+"- Tracks scores and declares the winner" 
