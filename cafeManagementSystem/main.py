@@ -19,8 +19,12 @@ class cafe:
         self.order()
     def order(self):
         while self.flag == 1:
-            price=self.menuItem[input("Enter item you want ").lower()]
-            self.total+=(int(input("Enter Quantity ")))*price
+            name=input("Enter item you want ").lower()
+            if name not in self.menuItem:
+                print("Sorry! no item found as such")
+            else:
+                price=self.menuItem[name]
+                self.total+=(int(input("Enter Quantity ")))*price
             if (input("Anything else? Yes/No ")).lower()=="no":
                 print(f"Your total is ${self.total}")
                 print("Thanks for visiting!")
