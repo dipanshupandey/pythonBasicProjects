@@ -1,4 +1,5 @@
 import random
+import time
 class SlotMachine:
     def __init__(self):
         self.maxLine=3
@@ -47,6 +48,23 @@ class SlotMachine:
             if (self.balance <= self.totalBet):
                 print("you dont have any coins left! \n GAME OVER!")
                 break
+
+            if input("Enter Y for Double or Nothing!").lower()  == "y" :
+                x=random.randint(0,10)
+                for i in range(10):
+                    print(".",end=" ")
+                    time.sleep(0.5)
+                print()
+                print(f"YOU GOT A {x}")
+                if x in [2,4,6,9]:
+
+                    print("JACKPOT!")
+                    self.balance *= 2
+                    print(f"BALANCE ${self.balance}")
+
+                else:
+                    print("BETTER LUCK NEXT TIME!!! BALANCE =$0")
+                    self.balance=0
             if input("Enter q to quit") == 'q':
                 print(f"BALANCE ${self.balance}")
                 break
