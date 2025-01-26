@@ -75,14 +75,27 @@ class GUI:
         root.mainloop()
 
     def openWindow1(self):
+
         window1=tk.Toplevel()
         window1.title("Add Transactions")
         window1.geometry("500x500")
         tk.Label(window1, text="Add Transactions", font=("Arial", 16)).pack(pady=20)
-        tk.Label(window1,text="Date",font=("Arial",16)).pack(pady=20)
+        tk.Label(window1,text="Date :",font=("Arial",16)).pack(pady=20)
+        date=tk.Entry(window1,width=30,fg="grey")
+        date.insert(0, "dd-mm-yy")
+        date.pack()
         tk.Label(window1,text="Amount",font=("Arial",16)).pack(pady=20)
+        Amount = tk.Entry(window1, width=30, fg="grey")
+        Amount.insert(0, "$")
+        Amount.pack()
         tk.Label(window1,text="Category",font=("Arial",16)).pack(pady=20)
+        cat = tk.Entry(window1, width=30, fg="grey")
+        cat.insert(0, "I for Income E for Expense")
+        cat.pack()
         tk.Label(window1,text="Desciption",font=("Arial",16)).pack(pady=20)
+        desc = tk.Entry(window1, width=30, fg="grey")
+        desc.insert(0, "Description (oprional)")
+        desc.pack()
         tk.Button(window1, text="Close", command=window1.destroy).pack(pady=10)
 
     def openWindow2(self):
