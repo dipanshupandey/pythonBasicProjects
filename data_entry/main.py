@@ -39,16 +39,18 @@ class CSV:
         mask=(df['date']>=start_date) & (df['date']<=end_date)
         filtered_df=df.loc[mask]
         if filtered_df.empty:
-            print("No Transaction found")
-            return
+            # print("No Transaction found")
+            return "No Transaction found",0,0,0
         else:
-            print(f"transactions between {datetime.strftime(start_date,CSV.FORMAT)} to {datetime.strftime(end_date,CSV.FORMAT)} :")
+            # print(f"transactions between {datetime.strftime(start_date,CSV.FORMAT)} to {datetime.strftime(end_date,CSV.FORMAT)} :")
 
-            print(filtered_df.to_string(index=False, formatters={"date": lambda x: x.strftime(CSV.FORMAT)}))
+            # print(filtered_df.to_string(index=False, formatters={"date": lambda x: x.strftime(CSV.FORMAT)}))
+            data=filtered_df.to_string(index=False, formatters={"date": lambda x: x.strftime(CSV.FORMAT)})
             income_sum=filtered_df[filtered_df["category"]=="Income"].amount.sum()
             expense_sum=filtered_df[filtered_df["category"]=="Expense"].amount.sum()
             saving=income_sum-expense_sum
-            print(income_sum,expense_sum,saving)
+            # print(income_sum,expense_sum,saving)
+            return data,income_sum,expense_sum,saving
 CSV.initialize_csv()
 def addData():
     date=getDate("Enter Date format -DD-MM-YY press enter to add todays date:")
@@ -106,9 +108,14 @@ class GUI:
                 d = datetime.today().strftime("%d-%m-%Y")
             if a== "":
                 a = 0
+            if c=="i" or c=="I":
+                c="Income"
+
+            if c=="e" or c=="E":
+                c="Expense"
             if c== "":
                 c = "N/A"
-            if de == "":
+            if de == "" or de=="Description (optional)":
                 de = "N/A"
 
 
@@ -145,10 +152,34 @@ class GUI:
 
 
     def openWindow2(self):
+
+        def showText():
+           data,income,expense,savings=CSV.get_transactions(startDate.get(),endDate.get())
+           text_widget.insert(tk.END,data)
+           text_widget.insert(tk.END,"\n\n")
+           text_widget.insert(tk.END,f"You total income is ${income} \n\n")
+           text_widget.insert(tk.END,f"You total Expense is ${expense} \n\n")
+           text_widget.insert(tk.END,f"You total savings ${savings} \n\n")
+
+
+
         window2 = tk.Toplevel()
         window2.title("Show Transactions")
-        window2.geometry("500x500")
-        tk.Label(window2,text="Show Transactions",font=("Arial",16)).pack(pady=20)
-        tk.Button(window2,text="close",command=window2.destroy).pack(pady=20)
+        window2.geometry("600x600")
+        startDate=tk.Entry(window2,width=30,fg="grey")
+        startDate.insert(0,"Start date dd-mm-yy")
+        startDate.pack(pady=10)
+        startDate.bind("<FocusIn>",  lambda event: startDate.delete(0, tk.END) if startDate.get() == "Start date dd-mm-yy" else None)
+        endDate=tk.Entry(window2,width=30,fg="grey")
+        endDate.insert(0,"End date dd-mm-yy")
+        endDate.pack(pady=10)
+        endDate.bind("<FocusIn>",lambda event: endDate.delete(0, tk.END) if endDate.get() == "End date dd-mm-yy" else None)
 
+        tk.Label(window2,text="Show Transactions",font=("Arial",16)).pack(pady=20)
+        text_widget = tk.Text(window2, height=22, width=60)
+        text_widget.pack(pady=10)
+        tk.Button(window2,text="fetch",command=showText).pack(pady=20)
+
+
+        # tk.Button(window2, text="close", command=window2.destroy).pack(pady=20)
 GUI()
