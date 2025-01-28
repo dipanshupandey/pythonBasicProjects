@@ -87,7 +87,7 @@ Add screenshots of your application's interface (optional):
 2. **Add Transactions**:
    ![Add Transactions](assets/addtrans.png)
 3. **Fetch Transactions**:
-   ![Fetch Transactions](assets/fetch.png)
+   ![Fetch Transactions](assets/fetchtrans.png)
 
 ---
 
